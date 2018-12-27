@@ -5,7 +5,7 @@ export default
                 "$$$fragment_properties": {
                     fragmentType: "div",
                     fragmentProps: {},
-                    fragmentActive: false
+                    fragmentActive: true
                 }
             },
             fragmentType: "div",

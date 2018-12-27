@@ -1,16 +1,14 @@
 import { FragmentContainer, PropTypes, React } from "./imports";
 
 export default class FluidFragmentComponent extends React.Component {
-    componentWillMount() {
-        console.log("FluidFragmentComponent", this.props.fragmentProps);
-    }
     render() {
-        const props = { ...this.props.fragmentProps };
+        const props = { ...this.props.fragmentProps, id: `$$fluidFragment$$${this.props.fragmentId}` };
 
         props.children = (<React.Fragment>
             {Object.keys(this.props.fragments).map(fragmentId =>
                 <FluidFragmentComponent
-                    fragmentContainer={this.props.fragmentContainer}
+                    fragmentActive={this.props.fragments[fragmentId].fragmentActive}
+                    fragmentContainer={this.props.fragments[fragmentId].styles || this.props.fragmentContainer}
                     fragmentProps={this.props.fragments[fragmentId].fragmentProps}
                     fragments={this.props.fragments[fragmentId].fragments}
                     key={fragmentId}
@@ -18,20 +16,26 @@ export default class FluidFragmentComponent extends React.Component {
         </React.Fragment>);
 
         let element = React.createElement(this.props.fragmentType, props);
-        return (<FragmentContainer fragmentContainer={this.props.fragmentContainer}>
-            {element}
-        </FragmentContainer>);
+        return (<React.Fragment>
+            {this.props.fragmentActive && <FragmentContainer
+                fragmentActive={this.props.fragmentActive}
+                fragmentContainer={this.props.fragmentContainer}>
+                {element}
+            </FragmentContainer>}
+        </React.Fragment>);
     }
 }
 FluidFragmentComponent.defaultProps = {
     fragmentType: "div",
     fragmentProps: {},
-    fragments: {}
+    fragments: {},
+    fragmentActive: true
 }
 FluidFragmentComponent.propTypes = {
     fragmentId: PropTypes.string.isRequired,
     fragmentProps: PropTypes.object,
     fragmentType: PropTypes.string.isRequired,
     fragments: PropTypes.object,
-    fragmentContainer: PropTypes.object
+    fragmentContainer: PropTypes.object,
+    fragmentActive: PropTypes.bool
 };
