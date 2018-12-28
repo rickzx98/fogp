@@ -1,5 +1,7 @@
+import { FluidFragment } from "./FluidFragmentModel";
 import { FluidFragmentActionTypes } from "./imports";
 import FluidFragmentDefaultState from "./FluidFragmentDefaultState";
+
 export default (state = FluidFragmentDefaultState, action) => {
     switch (action.type) {
         case FluidFragmentActionTypes.TYPE_CREATE_FRAGMENT: {
@@ -15,7 +17,7 @@ export default (state = FluidFragmentDefaultState, action) => {
 };
 const findFragment = (state, path) => {
     if (path) {
-        path = "$$root_fragment." + path;
+        path = `${FluidFragment.ROOT_FRAGMENT_ID}.${path}`;
         const splitted = path.split(/\./g);
         let stateValue = state;
         for (let index = 0; index < splitted.length; index++) {
@@ -26,7 +28,7 @@ const findFragment = (state, path) => {
         }
         return stateValue;
     }
-    return state["$$root_fragment"];
+    return state[FluidFragment.ROOT_FRAGMENT_ID];
 };
 const activateFragment = (state, path) => {
     let stateValue = findFragment(state, path);

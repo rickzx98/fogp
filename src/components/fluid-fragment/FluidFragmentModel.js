@@ -1,4 +1,5 @@
 export class FluidFragment {
+    static ROOT_FRAGMENT_ID = "$$root_fragment";
     constructor(fragmentId,
         fragments = {},
         fragmentType = "div",
@@ -10,6 +11,6 @@ export class FluidFragment {
     }
     withFragment(fragment) {
         this.fragments[fragment.fragmentId] = fragment;
-        return this; $
+        return this; 
     }
 }

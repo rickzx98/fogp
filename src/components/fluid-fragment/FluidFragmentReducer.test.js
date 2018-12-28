@@ -1,12 +1,13 @@
-import FluidFragmentReducer from "./FluidFragmentReducer";
+import { FluidFragment } from "./FluidFragmentModel";
 import { FluidFragmentActionTypes } from "./imports";
 import FluidFragmentDefaultState from "./FluidFragmentDefaultState";
-import { FluidFragment } from "./FluidFragmentModel";
+import FluidFragmentReducer from "./FluidFragmentReducer";
+
 it("should add a new fragment to 1st layer fragment", () => {
     const state = {
         ...FluidFragmentDefaultState
     };
-    state["$$root_fragment"].fragments["firstLayerFragment"] = new FluidFragment("firstLayerFragment");
+    state[FluidFragment.ROOT_FRAGMENT_ID].fragments["firstLayerFragment"] = new FluidFragment("firstLayerFragment");
     const newState = FluidFragmentReducer(state, {
         type: FluidFragmentActionTypes.TYPE_CREATE_FRAGMENT,
         payload: {
@@ -14,7 +15,7 @@ it("should add a new fragment to 1st layer fragment", () => {
             fragment: new FluidFragment("SampleFragment")
         }
     });
-    expect(newState["$$root_fragment"].fragments.firstLayerFragment.fragments.SampleFragment).toBeDefined();
+    expect(newState[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayerFragment.fragments.SampleFragment).toBeDefined();
 });
 it("should add a new fragment to $$root_fragment", () => {
     const state = { ...FluidFragmentDefaultState };
@@ -24,39 +25,39 @@ it("should add a new fragment to $$root_fragment", () => {
             fragment: new FluidFragment("SampleFragment")
         }
     });
-    expect(newState["$$root_fragment"].fragments.SampleFragment).toBeDefined();
+    expect(newState[FluidFragment.ROOT_FRAGMENT_ID].fragments.SampleFragment).toBeDefined();
 });
 
 it("should activate a fragment first layer", () => {
     const state = { ...FluidFragmentDefaultState };
-    state["$$root_fragment"].fragments.sampleFragment = {};
+    state[FluidFragment.ROOT_FRAGMENT_ID].fragments.sampleFragment = {};
     const newState = FluidFragmentReducer(state, {
         type: FluidFragmentActionTypes.TYPE_ACTIVATE_FRAGMENT,
         payload: "sampleFragment"
     });
-    expect(newState["$$root_fragment"].fragments.sampleFragment.active).toEqual(true);
+    expect(newState[FluidFragment.ROOT_FRAGMENT_ID].fragments.sampleFragment.active).toEqual(true);
 });
 
 it("should activate a fragment second layer", () => {
     const state = { ...FluidFragmentDefaultState };
-    state["$$root_fragment"].fragments.firstLayer = { fragments: {} };
-    state["$$root_fragment"].fragments.firstLayer.fragments.sampleFragment = {};
+    state[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayer = { fragments: {} };
+    state[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayer.fragments.sampleFragment = {};
     const newState = FluidFragmentReducer(state, {
         type: FluidFragmentActionTypes.TYPE_ACTIVATE_FRAGMENT,
         payload: "firstLayer.sampleFragment"
     });
-    expect(newState["$$root_fragment"].fragments.firstLayer.fragments.sampleFragment.active).toEqual(true);
+    expect(newState[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayer.fragments.sampleFragment.active).toEqual(true);
 });
 
 
 it("should activate a fragment third layer", () => {
     const state = { ...FluidFragmentDefaultState };
-    state["$$root_fragment"].fragments.firstLayer = { fragments: {} };
-    state["$$root_fragment"].fragments.firstLayer.fragments.secondLayer = { fragments: {} };
-    state["$$root_fragment"].fragments.firstLayer.fragments.secondLayer.fragments.sampleFragment = {};
+    state[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayer = { fragments: {} };
+    state[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayer.fragments.secondLayer = { fragments: {} };
+    state[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayer.fragments.secondLayer.fragments.sampleFragment = {};
     const newState = FluidFragmentReducer(state, {
         type: FluidFragmentActionTypes.TYPE_ACTIVATE_FRAGMENT,
         payload: "firstLayer.secondLayer.sampleFragment"
     });
-    expect(newState["$$root_fragment"].fragments.firstLayer.fragments.secondLayer.fragments.sampleFragment.active).toEqual(true);
+    expect(newState[FluidFragment.ROOT_FRAGMENT_ID].fragments.firstLayer.fragments.secondLayer.fragments.sampleFragment.active).toEqual(true);
 });
