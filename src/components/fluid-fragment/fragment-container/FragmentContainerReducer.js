@@ -4,8 +4,7 @@ export default (state = defaultState) => {
 
 const defaultState = {
     style: {
-        backgroundColor: "#89C3B1",
-        borderRadius: "3px"
+        backgroundColor: "#89C3B1"
     }
 };
 

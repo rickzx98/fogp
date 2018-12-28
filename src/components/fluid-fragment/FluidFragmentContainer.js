@@ -4,17 +4,21 @@ import { PropTypes, React, bindActionCreators, connect } from "./imports";
 
 import FluidFragment from "./FluidFragmentComponent";
 
-const MAIN_FRAGMENT = "$$root_fragment";
-
 class FluidFragmentContainer extends React.Component {
     render() {
-        return <FluidFragment
-            factory={this.props.factory}
-            fragmentId={MAIN_FRAGMENT}
-            fragmentProps={this.props.fluidFragment[MAIN_FRAGMENT].fragmentProps}
-            fragments={this.props.fluidFragment[MAIN_FRAGMENT].fragments}
-            fragmentType={this.props.fluidFragment[MAIN_FRAGMENT].fragmentType}
-            fragmentContainer={this.props.fragmentContainer} />
+        return (<React.Fragment>
+            {Object.keys(this.props.fluidFragment).map(fragmentId => {
+                return (<FluidFragment
+                    key={fragmentId}
+                    factory={this.props.factory}
+                    fragmentId={fragmentId}
+                    fragmentProps={this.props.fluidFragment[fragmentId].fragmentProps}
+                    fragments={this.props.fluidFragment[fragmentId].fragments}
+                    fragmentType={this.props.fluidFragment[fragmentId].fragmentType}
+                    fragmentContainer={this.props.fragmentContainer}
+                    fragmentActive={this.props.fluidFragment[fragmentId].fragmentActive} />);
+            })}
+        </React.Fragment>)
     }
 }
 

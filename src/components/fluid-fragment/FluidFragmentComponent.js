@@ -26,15 +26,16 @@ export default class FluidFragmentComponent extends React.Component {
         return props;
     }
     render() {
-        const props = this.createFragmentProps();
-        const FragmentComponent = this.createFragmentComponent();
-        return (<React.Fragment>
-            {this.props.fragmentActive && <FragmentContainer
+        if (this.props.fragmentActive) {
+            const props = this.createFragmentProps();
+            const FragmentComponent = this.createFragmentComponent();
+            return (<FragmentContainer
                 fragmentActive={this.props.fragmentActive}
                 fragmentContainer={this.props.fragmentContainer}>
                 {<FragmentComponent {...props} />}
-            </FragmentContainer>}
-        </React.Fragment>);
+            </FragmentContainer>);
+        }
+        return <React.Fragment />;
     }
 }
 FluidFragmentComponent.defaultProps = {

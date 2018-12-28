@@ -13,6 +13,7 @@ code {
     monospace;
 }
 #root {
+  padding: 0;
   display: flex;
   flex-direction: column;
 }

@@ -3,14 +3,20 @@ export class FluidFragment {
     constructor(fragmentId,
         fragments = {},
         fragmentType = "div",
-        fragmentProps = {}) {
+        fragmentProps = {}, containerProps = {}) {
         this.fragmentId = fragmentId;
         this.fragments = fragments;
         this.fragmentType = fragmentType;
         this.fragmentProps = fragmentProps;
+        this.containerProps = containerProps;
     }
     withFragment(fragment) {
         this.fragments[fragment.fragmentId] = fragment;
-        return this; 
+        return this;
     }
+}
+
+export class FragmentLayout {
+
+    
 }

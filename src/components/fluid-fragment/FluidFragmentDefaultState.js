@@ -28,8 +28,12 @@ export default
                 style: {
                     height: "100%",
                     display: "flex",
-                    flexDirection: "row-reverse"
+                    flexDirection: "row"
                 }
             }
+        },
+        "$$dialog_fragment": {
+            fragmentType: "Dialog",
+            fragmentActive: false
         }
     };
